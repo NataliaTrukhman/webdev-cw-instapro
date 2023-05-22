@@ -25,7 +25,7 @@ const getToken = () => {
   return token;
 };
 
-export const logout = () => {
+export const logout = () => { //не понимаю
   user = null;
   removeUserFromLocalStorage();
   goToPage(POSTS_PAGE);

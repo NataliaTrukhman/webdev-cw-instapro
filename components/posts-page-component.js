@@ -1,9 +1,14 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
+import { getPosts } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
+
+  //getPosts(token)
+   
+
   console.log("Актуальный список постов:", posts);
 
   /**
@@ -95,11 +100,11 @@ export function renderPostsPageComponent({ appEl }) {
 
   appEl.innerHTML = appHtml;
 
-  renderHeaderComponent({
+  renderHeaderComponent({   //шапка каждой страницы
     element: document.querySelector(".header-container"),
   });
 
-  for (let userEl of document.querySelectorAll(".post-header")) {
+  for (let userEl of document.querySelectorAll(".post-header")) { //шапка user поста
     userEl.addEventListener("click", () => {
       goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,

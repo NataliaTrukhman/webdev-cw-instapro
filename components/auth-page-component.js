@@ -58,8 +58,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
     // Точечно обновляем кусочек дом дерева
     const setError = (message) => {
       appEl.querySelector(".form-error").textContent = message;
+     
     };
-
+ 
     renderHeaderComponent({
       element: document.querySelector(".header-container"),
     });

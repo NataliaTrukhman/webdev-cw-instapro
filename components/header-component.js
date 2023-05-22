@@ -23,7 +23,7 @@ export function renderHeaderComponent({ element }) {
 `;
 
   element
-    .querySelector(".add-or-login-button")
+    .querySelector(".add-or-login-button") //добавление нового поста с фото(кнопка +)
     .addEventListener("click", () => {
       if (user) {
         goToPage(ADD_POSTS_PAGE);
@@ -32,11 +32,11 @@ export function renderHeaderComponent({ element }) {
       }
     });
 
-  element.querySelector(".logo").addEventListener("click", () => {
+  element.querySelector(".logo").addEventListener("click", () => { //ведет на начальную страницу
     goToPage(POSTS_PAGE);
   });
 
-  element.querySelector(".logout-button")?.addEventListener("click", logout);
+  element.querySelector(".logout-button")?.addEventListener("click", logout); //кнопка выйти(если зарегистрирован user)
 
   return element;
 }
