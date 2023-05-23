@@ -34,8 +34,7 @@ export function renderPostsPageComponent({ appEl, posts }) {
   })
   .join("")
    
-    // ${ postsHtml }
-
+  
  
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"

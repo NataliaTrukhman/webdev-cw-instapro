@@ -23,22 +23,23 @@ export function getPosts({ token }) {
     });
 }
 
-// //добавление поста пользователя?
-// export function addPost({ description, imageUrl, token }) {
-//   return fetch(postsHost, {
-//     method: "POST",
-//     body: JSON.stringify({
-//       description,
-//     }),
-//     headers: {
-//       Authorization: token,
-//     },
-//     imageUrl,
-//   })
-//     .then((response) => {
-//       return response.json();
-//     })
-// }
+//добавление поста пользователя?
+export function addPost({ description, imageUrl, token}) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+    headers: {
+      Authorization: token,
+    },
+    
+  })
+    .then((response) => {
+      return response.json();
+    })
+}
 
 
 
