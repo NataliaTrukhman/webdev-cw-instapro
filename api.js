@@ -24,7 +24,7 @@ export function getPosts({ token }) {
 }
 
 // //добавление поста пользователя?
-// export function onAddPostClick({ description, imageUrl }) {
+// export function addPost({ description, imageUrl, token }) {
 //   return fetch(postsHost, {
 //     method: "POST",
 //     body: JSON.stringify({
