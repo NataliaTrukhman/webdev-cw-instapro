@@ -26,7 +26,28 @@ export function getPosts({ token }) {
     });
 }
 
-//добавление поста пользователя?
+//Получить посты конкретного пользователя
+
+export function getPostsUser({ token, id }) {
+  return fetch(`${postsHost}/user-posts/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      return data.posts;
+    });
+}
+
+//Добавить новый пост
 export function addPost({ description, imageUrl, token}) {
   return fetch(postsHost, {
     method: "POST",
@@ -43,9 +64,6 @@ export function addPost({ description, imageUrl, token}) {
       return response.json();
     })
 }
-
-
-
 
 
 

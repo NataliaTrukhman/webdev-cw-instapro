@@ -3,7 +3,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 //import { getPosts } from "../api.js";
 
-export function renderPostsPageComponent({ appEl, posts }) {
+export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
   // TODO: реализовать рендер постов из api
 
   const postsHtml = posts.map((post)=>{
@@ -16,11 +16,11 @@ export function renderPostsPageComponent({ appEl, posts }) {
                       <img class="post-image" src="${post.imageUrl}">
                     </div>
                     <div class="post-likes">
-                      <button data-post-id=${post.id} class="like-button">
-                        <img src="./assets/images/like-active.svg">
+                      <button data-post-id=${post.id} data-liked="${post.isLiked}" class="like-button">
+                    ${post.isliked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">` }
                       </button>
                       <p class="post-likes-text">
-                        Нравится: <strong>2</strong>
+                        Нравится: <strong>${post.likes.length} </strong>
                       </p>
                     </div>
                     <p class="post-text">
@@ -54,13 +54,18 @@ export function renderPostsPageComponent({ appEl, posts }) {
     element: document.querySelector(".header-container"),
   });
 
-  for (let userEl of document.querySelectorAll(".post-header")) { //шапка user поста
-    userEl.addEventListener("click", () => {
-      goToPage(USER_POSTS_PAGE, {
-        userId: userEl.dataset.userId,
+
+  if (allPostsUserPage){
+
+    for(let userEl of document.querySelectorAll(".post-header")) { //шапка user поста
+      userEl.addEventListener("click", () => {
+        goToPage(USER_POSTS_PAGE, {
+          userId: userEl.dataset.userId,
+        });
       });
-    });
+    }
   }
+
 }
 
 
