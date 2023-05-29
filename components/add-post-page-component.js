@@ -64,6 +64,16 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     document.getElementById("add-button").addEventListener("click", () => {
        const description = document.querySelector('.textarea').value;
+
+      if (!imageUrl) {
+        alert("Не выбрана фотография");
+        return;
+      }
+
+      if (!description) {
+        alert("Нет описания к фотографии");
+        return;
+      }
       onAddPostClick({
         description: description, //  description / textareaInputElement.value ?
         imageUrl: imageUrl, //imageUrl

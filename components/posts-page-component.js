@@ -1,7 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
-//import { getPosts } from "../api.js";
+import { goToPage, getToken } from "../index.js";
+import { addLike, deletelike } from "../api.js";
 
 export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
   // TODO: реализовать рендер постов из api
@@ -53,6 +53,18 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
   renderHeaderComponent({   //шапка каждой страницы
     element: document.querySelector(".header-container"),
   });
+
+
+  for (let likeButton of document.querySelectorAll(".like-button")) {
+    likeButton.addEventListener("click", () => {
+      console.log('лайк');
+      if (likeButton.dataset.liked === "true"){
+        deletelike({ token: getToken(), id: likeButton.dataset.postId })
+        console.log(likeButton.dataset.postId);
+      } else { 
+        addLike({ token: getToken(), id: likeButton.dataset.postId }) }
+     })
+  } ;
 
 
   if (allPostsUserPage){

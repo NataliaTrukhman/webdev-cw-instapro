@@ -112,3 +112,30 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+
+
+//лайки
+
+export function addLike ({ id, token }) {
+
+  return fetch(`${postsHost}/${id}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    return response.json();
+  });
+}
+export function deletelike({ id, token }) {
+
+  return fetch(`${postsHost}/${id}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    return response.json();
+  });
+}
