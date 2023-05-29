@@ -1,12 +1,12 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { goToPage, getToken } from "../index.js";
-import { addLike, deletelike } from "../api.js";
+import { addLike, deletelike, getPosts } from "../api.js";
 
 export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
   // TODO: реализовать рендер постов из api
 
-  const postsHtml = posts.map((post)=>{
+  const postsHtml = posts.map((post) => {
     return `        <li class="post">
                     <div class="post-header" data-user-id=${post.user.id}>
                         <img src="${post.user.imageUrl}" class="post-header__user-image">
@@ -17,10 +17,10 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
                     </div>
                     <div class="post-likes">
                       <button data-post-id=${post.id} data-liked="${post.isLiked}" class="like-button">
-                    ${post.isliked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">` }
+                    ${post.isliked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">`}
                       </button>
                       <p class="post-likes-text">
-                        Нравится: <strong>${post.likes.length} </strong>
+                        Нравится: <strong>${post.likes.length}</strong>
                       </p>
                     </div>
                     <p class="post-text">
@@ -32,10 +32,10 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
                     </p>
                   </li>`
   })
-  .join("")
-   
-  
- 
+    .join("")
+
+
+
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
@@ -44,7 +44,7 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
               <div class="page-container">
                 <div class="header-container"></div>
                 <ul class="posts">
-                ${ postsHtml }
+                ${postsHtml}
                </ul>
               </div>`;
 
@@ -54,22 +54,34 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
     element: document.querySelector(".header-container"),
   });
 
+  if (allPostsUserPage) {
+    for (let likeButton of document.querySelectorAll(".like-button")) {
+      likeButton.addEventListener("click", () => {
+        console.log('лайк');
+        if (likeButton.dataset.liked === true) {
+          deletelike({ token: getToken(), id: likeButton.dataset.postId }).then(() => {
+           
+          })
 
-  for (let likeButton of document.querySelectorAll(".like-button")) {
-    likeButton.addEventListener("click", () => {
-      console.log('лайк');
-      if (likeButton.dataset.liked === "true"){
-        deletelike({ token: getToken(), id: likeButton.dataset.postId })
-        console.log(likeButton.dataset.postId);
-      } else { 
-        addLike({ token: getToken(), id: likeButton.dataset.postId }) }
-     })
-  } ;
+        } else {
+          addLike({ token: getToken(), id: likeButton.dataset.postId }).then(() => {
+          
+          })
 
 
-  if (allPostsUserPage){
 
-    for(let userEl of document.querySelectorAll(".post-header")) { //шапка user поста
+
+        }
+
+
+      })
+
+    };
+  }
+
+  if (allPostsUserPage) {
+
+    for (let userEl of document.querySelectorAll(".post-header")) { //шапка user поста
       userEl.addEventListener("click", () => {
         goToPage(USER_POSTS_PAGE, {
           userId: userEl.dataset.userId,
