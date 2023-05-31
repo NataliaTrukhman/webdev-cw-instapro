@@ -17,7 +17,7 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
                     </div>
                     <div class="post-likes">
                       <button data-post-id=${post.id} data-liked="${post.isLiked}" class="like-button">
-                    ${post.isliked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">`}
+                    ${post.isLiked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">`}
                       </button>
                       <p class="post-likes-text">
                         Нравится: <strong>${post.likes.length}</strong>
@@ -58,22 +58,26 @@ export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
     for (let likeButton of document.querySelectorAll(".like-button")) {
       likeButton.addEventListener("click", () => {
         console.log('лайк');
-        if (likeButton.dataset.liked === true) {
-          deletelike({ token: getToken(), id: likeButton.dataset.postId }).then(() => {
-           
-          })
+
+        const postId = likeButton.dataset.postId; //получаем id
+        const index = posts.findIndex((post) => post.id === postId); //индекс поста из массива 
+
+        if (posts[index].isLiked) {
+          deletelike({ token: getToken(), id: postId })
+            .then((upDatePost) => {
+              console.log(upDatePost);
+              posts[index].likes = upDatePost.post.likes;
+              posts[index].isLiked = false;
+              renderPostsPageComponent({ appEl, posts, allPostsUserPage }) //рендер 
+            })
 
         } else {
-          addLike({ token: getToken(), id: likeButton.dataset.postId }).then(() => {
-          
+          addLike({ token: getToken(), id: postId }).then((upDatePost) => {
+            posts[index].likes = upDatePost.post.likes;
+            posts[index].isLiked = true;
+            renderPostsPageComponent({ appEl, posts, allPostsUserPage })
           })
-
-
-
-
         }
-
-
       })
 
     };
