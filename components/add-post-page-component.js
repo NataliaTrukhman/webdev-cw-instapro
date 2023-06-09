@@ -63,7 +63,8 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     });
 
     document.getElementById("add-button").addEventListener("click", () => {
-       const description = document.querySelector('.textarea').value;
+       const description = document.querySelector('.textarea').value.replace(/</g, "&lt;")
+       .replace(/>/g, "&gt;");
 
       if (!imageUrl) {
         alert("Не выбрана фотография");
